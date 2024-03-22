@@ -37,10 +37,13 @@ Deno.test(function testNumberTree(): void {
     assertEquals(findResult?.data, 4)
     assertEquals(findResult?.left, undefined)
     assertEquals(findResult?.right, undefined)
+
+    const bfArray = tree.toArray(BinaryTreeMode.BreadthFirstSearch)
+    console.log(bfArray)
 });
 
 Deno.test(function testStringTree(): void {
-    const tree: BinaryTree<String> = new BinaryTree(BinaryTreeMode.InOrder)
+    const tree: BinaryTree<String> = new BinaryTree()
     const addResult: BinaryTreeNode<String> = tree.add("sean")
     assertEquals(addResult.data, "sean")
     assertEquals(addResult.left, undefined)

@@ -18,11 +18,17 @@ export class BinaryTree<T> {
     }
 
     toArray(mode: BinaryTreeMode): Array<T> {
-        if (this.head === undefined) {
-            return new Array<T>()
+        const results: Array<T> = new Array<T>()
+
+        if (mode === BinaryTreeMode.BreadthFirstSearch) {
+            this.toArrayBreadthFirst(this.head, results)
+        } else if (mode === BinaryTreeMode.DepthFirstSearch) {
+            this.toArrayDepthFirst(this.head, results)
+        } else if (mode === BinaryTreeMode.InOrder) {
+            this.toArrayInOrder(this.head, results)
         }
 
-        return this.toArrayNode(mode, this.head)
+        return results
     }
 
 
@@ -82,26 +88,45 @@ export class BinaryTree<T> {
         return currentHead
     }
 
-    private toArrayInOrder(): Array<T> {
-        const results: (T)[] = new Array<T>();
 
-        if (this.head === undefined) {
-            return results
+    private toArrayInOrder(head: BinaryTreeNode<T> | undefined, results: Array<T>): void {
+        if (head === undefined) {
+            return
+        } else if (head.left !== undefined) {
+            this.toArrayInOrder(head.left, results);
         }
 
+        results.push(head.data);
 
-    }
-
-    private toArrayBreadthFirst(): Array<T> {
-        if (this.head === undefined) {
-            return new Array<T>();
+        if (head.right !== undefined) {
+            this.toArrayInOrder(head.right, results);
         }
     }
 
-    private toArrayDepthFirst(): Array<T> {
-        if (this.head === undefined) {
+    private toArrayBreadthFirst(head: BinaryTreeNode<T> | undefined, results: Array<T>): void {
+        if (head === undefined) {
             return
         }
+
+        results.push(head.data);
+
+        if (head.left !== undefined) {
+            this.toArrayInOrder(head.left, results);
+        } else if (head.right !== undefined) {
+            this.toArrayInOrder(head.right, results);
+        }
+    }
+
+    private toArrayDepthFirst(head: BinaryTreeNode<T> | undefined, results: Array<T>): void {
+        if (head === undefined) {
+            return
+        } else if (head.left !== undefined) {
+            this.toArrayInOrder(head.left, results);
+        } else if (head.right !== undefined) {
+            this.toArrayInOrder(head.right, results);
+        }
+
+        results.push(head.data);
     }
 }
 
