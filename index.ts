@@ -1,68 +1,65 @@
-class BinaryTree<T> {
-    head: Node<T> | undefined
-    mode: Mode = Mode.DepthFirstSearch;
+export class BinaryTree<T> {
+    head: BinaryTreeNode<T> | undefined
 
-    constructor(mode: Mode) {
-        this.mode = mode
-    }
-
-    add(t: T): Node<T> {
+    add(t: T): BinaryTreeNode<T> {
         if (this.head === undefined) {
-            this.head = new Node<T>(t)
+            this.head = new BinaryTreeNode<T>(t)
         }
 
         return this.addNode(t, this.head)
     }
 
-    delete(t: T): Node<T> | undefined {
+    delete(t: T): BinaryTreeNode<T> | undefined {
         return this.deleteNode(t, this.head)
     }
 
-    find(t: T): Node<T> | undefined {
+    find(t: T): BinaryTreeNode<T> | undefined {
         return this.findNode(t, this.head)
     }
 
-    print() {
-        if (this.mode == Mode.InOrder) {
-            this.printInOrder()
-        } else if (this.mode == Mode.BreadthFirstSearch) {
-            this.printBreadthFirst()
-        } else if (this.mode == Mode.DepthFirstSearch) {
-            this.printDepthFirst()
+    toArray(mode: BinaryTreeMode): Array<T> {
+        if (this.head === undefined) {
+            return new Array<T>()
         }
+
+        return this.toArrayNode(mode, this.head)
     }
 
 
-    private addNode(t: T, head: Node<T> | undefined): Node<T> {
+    private addNode(t: T, head: BinaryTreeNode<T> | undefined): BinaryTreeNode<T> {
         if (head === undefined) {
-            return new Node<T>(t)
+            return new BinaryTreeNode<T>(t)
         } else if (t > head.data) {
-            return this.addNode(t, head.right)
+            head.right = this.addNode(t, head.right)
+            return head
         } else if (t < head.data) {
-            return this.addNode(t, head.left)
+            head.left = this.addNode(t, head.left)
+            return head
         } else {
             return head
         }
     }
 
-    private deleteNode(t: T, head: Node<T> | undefined): Node<T> | undefined {
+    private deleteNode(t: T, head: BinaryTreeNode<T> | undefined): BinaryTreeNode<T> | undefined {
         if (head === undefined) {
             return undefined
         }
 
         if (t > head.data) {
-            return this.deleteNode(t, head.right)
+            head.right = this.deleteNode(t, head.right)
+            return head
         } else if (t < head.data) {
-            return this.deleteNode(t, head.left)
+            head.left = this.deleteNode(t, head.left)
+            return head
         } else {
-            const maxOfMin: Node<T> = this.getMaxOfMin(head)
+            const maxOfMin: BinaryTreeNode<T> = this.getMaxOfMin(head)
             const oldData: T = head.data
             head.data = maxOfMin.data
             return this.deleteNode(oldData, head)
         }
     }
 
-    private findNode(t: T, head: Node<T> | undefined): Node<T> | undefined {
+    private findNode(t: T, head: BinaryTreeNode<T> | undefined): BinaryTreeNode<T> | undefined {
         if (head === undefined) {
             return undefined
         }
@@ -76,8 +73,8 @@ class BinaryTree<T> {
         }
     }
 
-    private getMaxOfMin(head: Node<T>): Node<T> {
-        let currentHead: Node<T> = head
+    private getMaxOfMin(head: BinaryTreeNode<T>): BinaryTreeNode<T> {
+        let currentHead: BinaryTreeNode<T> = head
         while (currentHead.left !== undefined) {
             currentHead = currentHead.left
         }
@@ -85,22 +82,32 @@ class BinaryTree<T> {
         return currentHead
     }
 
-    private printInOrder(): void {
+    private toArrayInOrder(): Array<T> {
+        const results: (T)[] = new Array<T>();
+
+        if (this.head === undefined) {
+            return results
+        }
+
 
     }
 
-    private printBreadthFirst(): void {
-
+    private toArrayBreadthFirst(): Array<T> {
+        if (this.head === undefined) {
+            return new Array<T>();
+        }
     }
 
-    private printDepthFirst(): void {
-        
+    private toArrayDepthFirst(): Array<T> {
+        if (this.head === undefined) {
+            return
+        }
     }
 }
 
-class Node<T> {
-    left: Node<T> | undefined
-    right: Node<T> | undefined
+export class BinaryTreeNode<T> {
+    left: BinaryTreeNode<T> | undefined
+    right: BinaryTreeNode<T> | undefined
     data: T
 
     constructor(data: T) {
@@ -108,7 +115,7 @@ class Node<T> {
     }
 }
 
-enum Mode {
+export enum BinaryTreeMode {
     DepthFirstSearch = 0,
     BreadthFirstSearch = 1,
     InOrder = 2,
