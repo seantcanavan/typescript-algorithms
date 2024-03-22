@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "deno.ns"
+    ],
+    "strict": true,
+    "target": "esnext"
+  },
+  "lint": {
+    "files": {
+      "include": [
+        "./src"
+      ],
+      "exclude": [
+        "./src/ignore"
+      ]
+    }
+  },
+  "fmt": {},
+  "importMap": "import_map.json",
+  "tasks": {
+    "start": "deno run --allow-net server.ts",
+    "test": "deno test"
+  }
+}
