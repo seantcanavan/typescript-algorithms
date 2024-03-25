@@ -1,10 +1,5 @@
-const response: Response = await fetch("https://ifconfig.me");
-const text: string = await response.text();
+export const VALID_IP_ADDRESS: string = "209.150.247.212";
 
-const magicStringBegin: string = "<td id=\"ip_address_cell\"><strong id=\"ip_address\">";
-const magicStringEnd: string = "</strong></td>"
-const magicStringBeginIndex: number = text.indexOf(magicStringBegin)
-const magicStringEndIndex: number = text.indexOf(magicStringEnd, magicStringBeginIndex)
-
-const ipAddress: string = text.substring(magicStringBeginIndex + magicStringBegin.length, magicStringEndIndex)
-console.log("your ip address is ", ipAddress)
+export interface IPAddressRetriever {
+    getIPAddress(): Promise<string>;
+}
