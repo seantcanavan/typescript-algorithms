@@ -1,6 +1,6 @@
 {
   "name": "typescript-algorithms",
-  "module": "index.ts",
+  "module": "src/",
   "type": "module",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^7.3.1",

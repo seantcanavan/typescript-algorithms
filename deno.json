@@ -4,8 +4,7 @@
       "deno.ns",
       "deno.window"
     ],
-    "strict": true,
-    "target": "esnext"
+    "strict": true
   },
   "lint": {
     "files": {
