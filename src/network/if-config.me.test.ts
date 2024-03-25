@@ -1,4 +1,5 @@
 import {assertEquals} from "https://deno.land/std@0.220.1/assert/mod.ts";
+import {IFConfigMe} from './if-config.me.ts';
 import {VALID_IP_ADDRESS} from './network.ts';
 
 
@@ -21,3 +22,9 @@ Deno.test("GET request to ifconfig.me should return status 200", async (t: Deno.
         assertEquals(VALID_IP_ADDRESS, ipAddress, "Returned IP should match the known value");
     });
 });
+
+Deno.test(function verifyURL(): void {
+    const ifConfigMe: IFConfigMe = new IFConfigMe();
+    const URL: string = ifConfigMe.getURL();
+    assertEquals("https://ifconfig.me", URL, "getURL should return the correct URL");
+})

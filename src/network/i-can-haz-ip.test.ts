@@ -23,3 +23,9 @@ Deno.test("GET request to icanhazip.com should return status 200 and valid IP ad
         assertEquals(VALID_IP_ADDRESS, ipAddress, "Returned IP should match the known value");
     });
 })
+
+Deno.test(function verifyURL(): void {
+    const iCanHazIP: ICanHazIp = new ICanHazIp();
+    const URL: string = iCanHazIP.getURL();
+    assertEquals("https://icanhazip.com", URL, "getURL should return the correct URL")
+});
